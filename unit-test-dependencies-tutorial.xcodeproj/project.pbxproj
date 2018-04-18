@@ -92,6 +92,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EE7DBC982087B23F003C2DE9 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
 		EEEF77A81FFB265F003A3252 = {
 			isa = PBXGroup;
 			children = (
@@ -130,7 +137,7 @@
 		EEEF77C81FFB265F003A3252 /* unit-test-dependencies-tutorialTests */ = {
 			isa = PBXGroup;
 			children = (
-				EEEF77D91FFB275D003A3252 /* Stubs */,
+				EE7DBC982087B23F003C2DE9 /* Stubs */,
 				EEEF77CB1FFB265F003A3252 /* Info.plist */,
 				EED23C512009673B008234EF /* MainViewModelTests.swift */,
 			);
@@ -168,13 +175,6 @@
 				EED23C4C200965D5008234EF /* LocationService.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		EEEF77D91FFB275D003A3252 /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
