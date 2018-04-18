@@ -14,7 +14,16 @@ struct ApiClient {
         
         guard let url = URL(string: endPoint) else { return }
         
-        //TODO: Make request to URLSession
+        let session = URLSession()
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else { return }
+            
+            
+            print("Response data \(data)")
+        }
+        task.resume()
         
         
     }

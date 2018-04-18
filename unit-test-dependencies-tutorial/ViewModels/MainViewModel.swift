@@ -7,3 +7,31 @@
 //
 
 import Foundation
+
+struct MainViewModel {
+    
+    private let locationServiceType: LocationServiceType
+    
+    init(locationServiceType: LocationServiceType) {
+        self.locationServiceType = locationServiceType
+    }
+    
+    func updateCurrentAddress(completion: @escaping (String) -> ()) {
+        
+        locationServiceType.currentAddress { (placemark) in
+            guard let title = placemark?.title else {
+                    return completion("No Address")
+            }
+            completion(title)
+        }
+    }
+    
+    func currentPostalCode(completion: @escaping (String) -> ()) {
+        locationServiceType.currentAddress { (placemark) in
+            guard let postalCode = placemark?.postalCode else {
+                return completion("No Address")
+            }
+            completion(postalCode)
+        }
+    }
+}

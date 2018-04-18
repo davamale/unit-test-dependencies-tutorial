@@ -7,12 +7,21 @@
 //
 
 import Foundation
+import MapKit
 
-// Every core class should conform to a protocol
-protocol ApiClientType {
-    static func get(endPoint: String, completion: () -> ())
+protocol ViewCustomizable {
+    func viewLoaded()
+    func prepareView()
+    func addButtonActions()
 }
 
-protocol LocationManagerType {
-    func address(for zipcode: String)
+extension ViewCustomizable {
+    func viewLoaded() {
+        prepareView()
+        addButtonActions()
+    }
+}
+
+protocol LocationServiceType {
+    func currentAddress(completion: @escaping (MKPlacemark?) -> ())
 }
