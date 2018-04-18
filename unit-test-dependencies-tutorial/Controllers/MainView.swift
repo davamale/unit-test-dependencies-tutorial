@@ -13,7 +13,6 @@ class MainView: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var searchText: UITextField!
     @IBOutlet weak var searchButton: UIButton!
-    private let viewModel = MainViewModel(locationServiceType: LocationService.shared)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +25,12 @@ class MainView: UIViewController {
 @objc extension MainView {
     
     func updateCurrentAddress() {
-        viewModel.updateCurrentAddress { [unowned self] (address) in
-            self.addressLabel.text = address
+        LocationService.shared.currentAddress { (placemark) in
+            guard let title = placemark?.title else {
+                self.addressLabel.text = "No Address"
+                return
+            }
+            self.addressLabel.text = title
         }
     }
 }

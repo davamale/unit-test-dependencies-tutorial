@@ -9,10 +9,7 @@
 /* Begin PBXBuildFile section */
 		38CE4607917C240AD0CB1AA0 /* Pods_unit_test_dependencies_tutorialTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6290B5B98D095BF0A9ED82B8 /* Pods_unit_test_dependencies_tutorialTests.framework */; };
 		C067FFB7C60A176FB2F37CCB /* Pods_unit_test_dependencies_tutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9DAC4FEA43187C9041FFC3 /* Pods_unit_test_dependencies_tutorial.framework */; };
-		EE111C2A208660F80076A77F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE636394208045B7006C1DB3 /* MainViewModel.swift */; };
 		EE111C2B2086611D0076A77F /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEF77DD1FFB29B5003A3252 /* Protocols.swift */; };
-		EE111C2F208666970076A77F /* ServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE111C2E208666970076A77F /* ServiceStub.swift */; };
-		EE636395208045B7006C1DB3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE636394208045B7006C1DB3 /* MainViewModel.swift */; };
 		EED23C4D200965D5008234EF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED23C4C200965D5008234EF /* LocationService.swift */; };
 		EED23C522009673B008234EF /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED23C512009673B008234EF /* MainViewModelTests.swift */; };
 		EEEF77B51FFB265F003A3252 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEF77B41FFB265F003A3252 /* AppDelegate.swift */; };
@@ -39,9 +36,7 @@
 		5C2D290CD0649AF2D1D91D1A /* Pods-unit-test-dependencies-tutorial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-test-dependencies-tutorial.release.xcconfig"; path = "Pods/Target Support Files/Pods-unit-test-dependencies-tutorial/Pods-unit-test-dependencies-tutorial.release.xcconfig"; sourceTree = "<group>"; };
 		6290B5B98D095BF0A9ED82B8 /* Pods_unit_test_dependencies_tutorialTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unit_test_dependencies_tutorialTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DC97FAA5849DEFE3299C13 /* Pods-unit-test-dependencies-tutorialTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-test-dependencies-tutorialTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unit-test-dependencies-tutorialTests/Pods-unit-test-dependencies-tutorialTests.debug.xcconfig"; sourceTree = "<group>"; };
-		EE111C2E208666970076A77F /* ServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStub.swift; sourceTree = "<group>"; };
 		EE4F1B7B2000B37E000AA12F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EE636394208045B7006C1DB3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		EED23C4C200965D5008234EF /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		EED23C512009673B008234EF /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		EEEF77B11FFB265F003A3252 /* unit-test-dependencies-tutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unit-test-dependencies-tutorial.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,14 +92,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EE63639120804594006C1DB3 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				EE636394208045B7006C1DB3 /* MainViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		EEEF77A81FFB265F003A3252 = {
 			isa = PBXGroup;
 			children = (
@@ -129,7 +116,6 @@
 		EEEF77B31FFB265F003A3252 /* unit-test-dependencies-tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				EE63639120804594006C1DB3 /* ViewModels */,
 				EEEF77B41FFB265F003A3252 /* AppDelegate.swift */,
 				EEEF77BB1FFB265F003A3252 /* Assets.xcassets */,
 				EEEF77D41FFB26EB003A3252 /* Controllers */,
@@ -187,7 +173,6 @@
 		EEEF77D91FFB275D003A3252 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
-				EE111C2E208666970076A77F /* ServiceStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -408,7 +393,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE636395208045B7006C1DB3 /* MainViewModel.swift in Sources */,
 				EEEF77B71FFB265F003A3252 /* MainView.swift in Sources */,
 				EEEF77B51FFB265F003A3252 /* AppDelegate.swift in Sources */,
 				EED23C4D200965D5008234EF /* LocationService.swift in Sources */,
@@ -420,10 +404,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE111C2F208666970076A77F /* ServiceStub.swift in Sources */,
 				EE111C2B2086611D0076A77F /* Protocols.swift in Sources */,
 				EED23C522009673B008234EF /* MainViewModelTests.swift in Sources */,
-				EE111C2A208660F80076A77F /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
