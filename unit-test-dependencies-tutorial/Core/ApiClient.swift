@@ -8,6 +8,31 @@
 
 import UIKit
 
+enum Route {
+    static let baseUrl = "https://jobs.github.com/positions.json"
+    
+    case parameters([Parameter: String])
+    
+    var completeUrl: String {
+        
+        if case let Route.parameters(parameters) = self {
+            
+            let encodedParams = parameters.reduce("") { result, value in
+                guard let htmlEncoded = value.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return "" }
+                return result + "\(value.key.rawValue)=\(htmlEncoded)&"
+            }
+            return "\(Route.baseUrl)?\(encodedParams)"
+        }
+        
+        return Route.baseUrl
+    }
+}
+
+enum Parameter: String {
+    case jobType = "description"
+    case location
+}
+
 struct ApiClient {
 
     static func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
