@@ -58,7 +58,7 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
     
     @objc func fetchJobsAround(postalCode: String) {
         guard let url = URL(string: Route.parameters([Parameter.jobType: "ios", Parameter.location: postalCode]).completeUrl) else { return }
-        ApiClient.get(url: url) { [unowned self] response in
+        ApiClient.shared.get(url: url) { [unowned self] response in
             guard let response = response else { return }
             self.jobs = response
             self.tableView.reloadData()

@@ -34,8 +34,10 @@ enum Parameter: String {
 }
 
 struct ApiClient {
+    
+    static let shared = ApiClient()
 
-    static func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
+    func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
         
         let request = URLRequest(url: url)
         
