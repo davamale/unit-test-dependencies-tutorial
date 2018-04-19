@@ -24,4 +24,9 @@ extension ViewCustomizable {
 
 protocol LocationServiceType {
     func currentAddress(completion: @escaping (MKPlacemark?) -> ())
+    func addressFor(postalCode: String, completion: @escaping (MKPlacemark?) -> ())
+}
+
+protocol ApiClientType {
+    func get(url: URL, completion: @escaping ([NSDictionary]?) -> ())
 }

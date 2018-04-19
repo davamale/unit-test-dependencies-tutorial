@@ -8,26 +8,53 @@
 
 import UIKit
 
-struct ApiClient {
-
-    static func get(endPoint: String, completion: () -> ()) {
+enum Route {
+    static let baseUrl = "https://jobs.github.com/positions.json"
+    
+    case parameters([Parameter: String])
+    
+    var completeUrl: String {
         
-        guard let url = URL(string: endPoint) else { return }
-        
-        let session = URLSession()
-        let request = URLRequest(url: url)
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            guard let data = data, error == nil else { return }
+        if case let Route.parameters(parameters) = self {
             
-            
-            print("Response data \(data)")
+            let encodedParams = parameters.reduce("") { result, value in
+                guard let htmlEncoded = value.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return "" }
+                return result + "\(value.key.rawValue)=\(htmlEncoded)&"
+            }
+            return "\(Route.baseUrl)?\(encodedParams)"
         }
-        task.resume()
         
-        
+        return Route.baseUrl
     }
 }
 
-//extension ApiClient: ApiClientType {}
+enum Parameter: String {
+    case jobType = "description"
+    case location
+}
+
+struct ApiClient: ApiClientType {
+    
+    static let shared = ApiClient()
+
+    func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
+        
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let deserializedResponse = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [NSDictionary]
+                DispatchQueue.main.async {
+                    completion(deserializedResponse)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }.resume()
+    }
+}
 
