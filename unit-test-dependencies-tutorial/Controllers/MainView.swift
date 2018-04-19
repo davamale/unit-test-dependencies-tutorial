@@ -18,35 +18,26 @@ class MainView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewLoaded()
+        view.backgroundColor = UIColor.groupTableViewBackground
+        
+        searchButton.addTarget(self, action: #selector(updateCurrentAddress), for: .touchUpInside)
+        
         updateCurrentAddress()
+        
     }
-}
-
-// MARK: - Actions
-@objc extension MainView {
     
-    func updateCurrentAddress() {
-        LocationService.shared.currentAddress { (placemark) in
+    @objc func updateCurrentAddress() {
+        LocationService.shared.currentAddress { [unowned self] (placemark) in
             guard let city = placemark?.locality, let postalCode = placemark?.postalCode else {
                 self.addressLabel.text = "No Address"
                 return
             }
             self.addressLabel.text = "\(city), \(postalCode)"
+            self.fetchJobsAround(postalCode: postalCode)
         }
     }
-}
-
-// MARK: - ViewCustomizable
-extension MainView: ViewCustomizable {
     
-    func prepareView() {
-        // customize your view
-        view.backgroundColor = UIColor.groupTableViewBackground
-    }
-    
-    func addButtonActions() {
-        searchButton.addTarget(self, action: #selector(updateCurrentAddress), for: .touchUpInside)
+    @objc func fetchJobsAround(postalCode: String) {
+        
     }
 }
-
