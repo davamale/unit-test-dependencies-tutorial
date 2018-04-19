@@ -21,3 +21,11 @@ extension ViewCustomizable {
         addButtonActions()
     }
 }
+
+protocol LocationServiceType {
+    func currentAddress(completion: @escaping (MKPlacemark?) -> ())
+}
+
+protocol ApiClientType {
+    func get(url: URL, completion: @escaping ([NSDictionary]?) -> ())
+}
