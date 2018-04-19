@@ -45,6 +45,7 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
         searchText.resignFirstResponder()
         guard let postalCode = searchText.text, !postalCode.isEmpty else { return }
         viewModel.updateAddressFor(postalCode: postalCode)
+        fetchJobsAround(postalCode: postalCode)
     }
     
     @objc func fetchJobsAround(postalCode: String) {
