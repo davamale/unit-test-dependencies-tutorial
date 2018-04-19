@@ -16,11 +16,16 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchStackView: UIStackView!
+    private var viewModel: MainViewModel!
     
     private var jobs = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = MainViewModel(locationServiceType: LocationService.shared, apiClientType: ApiClient.shared, addressCompletion: { address in
+            self.addressLabel.text = address
+        })
         
         tableView.backgroundColor = UIColor.white
         tableView.tableFooterView = UIView()
@@ -33,34 +38,19 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
     }
     
     @objc func updateCurrentAddress() {
-        LocationService.shared.currentAddress { [unowned self] (placemark) in
-            guard let city = placemark?.locality, let postalCode = placemark?.postalCode else {
-                self.addressLabel.text = "No Address"
-                return
-            }
-            self.addressLabel.text = "\(city), \(postalCode)"
-            self.fetchJobsAround(postalCode: postalCode)
-        }
+        viewModel.updateCurrentAddress()
     }
     
     @objc func updateLocationTapped() {
         searchText.resignFirstResponder()
         guard let postalCode = searchText.text, !postalCode.isEmpty else { return }
-        LocationService.shared.addressFor(postalCode: postalCode) { (placemark) in
-            guard let city = placemark?.locality, let postalCode = placemark?.postalCode else {
-                self.addressLabel.text = "No Address"
-                return
-            }
-            self.addressLabel.text = "\(city), \(postalCode)"
-            self.fetchJobsAround(postalCode: postalCode)
-        }
+        viewModel.updateAddressFor(postalCode: postalCode)
     }
     
     @objc func fetchJobsAround(postalCode: String) {
-        guard let url = URL(string: Route.parameters([Parameter.jobType: "ios", Parameter.location: postalCode]).completeUrl) else { return }
-        ApiClient.get(url: url) { [unowned self] response in
-            guard let response = response else { return }
-            self.jobs = response
+        viewModel.fetchJobsAround(postalCode: postalCode) { (jobs) in
+            guard let jobs = jobs else { return }
+            self.jobs = jobs
             self.tableView.reloadData()
         }
     }

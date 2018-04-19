@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 import Contacts
 
-final class LocationService {
+final class LocationService: LocationServiceType {
     
     // Singleton
     static let shared = LocationService()

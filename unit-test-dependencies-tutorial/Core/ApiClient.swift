@@ -33,7 +33,9 @@ enum Parameter: String {
     case location
 }
 
-struct ApiClient {
+struct ApiClient: ApiClientType {
+    
+    static let shared = ApiClient()
 
     func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
         
