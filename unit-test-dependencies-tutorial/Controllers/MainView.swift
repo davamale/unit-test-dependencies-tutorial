@@ -13,11 +13,13 @@ class MainView: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var searchText: UITextField!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var currentLocationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewLoaded()
+        updateCurrentAddress()
     }
 }
 
@@ -26,11 +28,11 @@ class MainView: UIViewController {
     
     func updateCurrentAddress() {
         LocationService.shared.currentAddress { (placemark) in
-            guard let title = placemark?.title else {
+            guard let city = placemark?.locality, let postalCode = placemark?.postalCode else {
                 self.addressLabel.text = "No Address"
                 return
             }
-            self.addressLabel.text = title
+            self.addressLabel.text = "\(city), \(postalCode)"
         }
     }
 }
