@@ -36,6 +36,17 @@ final class LocationService {
             completion(mkPlacemark)
         }
     }
+    
+    func addressFor(postalCode: String, completion: @escaping (MKPlacemark?) -> ()) {
+        geo.geocodeAddressString(postalCode) { (placemarks, error) in
+            guard let location = placemarks?.first?.location, let postalAddress = placemarks?.first?.postalAddress else {
+                return completion(nil)
+            }
+            
+            let mkPlacemark = MKPlacemark(coordinate: location.coordinate, postalAddress: postalAddress)
+            completion(mkPlacemark)
+        }
+    }
 }
 
 

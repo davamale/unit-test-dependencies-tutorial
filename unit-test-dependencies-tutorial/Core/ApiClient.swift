@@ -10,24 +10,26 @@ import UIKit
 
 struct ApiClient {
 
-    static func get(endPoint: String, completion: () -> ()) {
+    static func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
         
-        guard let url = URL(string: endPoint) else { return }
-        
-        let session = URLSession()
         let request = URLRequest(url: url)
         
-        let task = session.dataTask(with: request) { (data, response, error) in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else { return }
             
-            
-            print("Response data \(data)")
-        }
-        task.resume()
+            do {
+                let deserializedResponse = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [NSDictionary]
+                DispatchQueue.main.async {
+                    completion(deserializedResponse)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }.resume()
         
         
     }
 }
-
-//extension ApiClient: ApiClientType {}
 

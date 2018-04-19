@@ -8,22 +8,49 @@
 
 import UIKit
 
-class MainView: UIViewController {
+enum Route {
+    static let baseUrl = "https://jobs.github.com/positions.json"
+    
+    case parameters([Parameter: String])
+    
+    var completeUrl: String {
+        
+        if case let Route.parameters(parameters) = self {
+            
+            let encodedParams = parameters.reduce("") { result, value in
+                guard let htmlEncoded = value.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return "" }
+                return result + "\(value.key.rawValue)=\(htmlEncoded)&"
+            }
+            return "\(Route.baseUrl)?\(encodedParams)"
+        }
+        
+        return Route.baseUrl
+    }
+}
+
+enum Parameter: String {
+    case jobType = "description"
+    case location
+}
+
+class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
 
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var searchText: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
+    private var jobs = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.groupTableViewBackground
         
-        searchButton.addTarget(self, action: #selector(updateCurrentAddress), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(updateLocationTapped), for: .touchUpInside)
         
         updateCurrentAddress()
-        
     }
     
     @objc func updateCurrentAddress() {
@@ -37,7 +64,54 @@ class MainView: UIViewController {
         }
     }
     
-    @objc func fetchJobsAround(postalCode: String) {
-        
+    @objc func updateLocationTapped() {
+        searchText.resignFirstResponder()
+        guard let postalCode = searchText.text, !postalCode.isEmpty else { return }
+        LocationService.shared.addressFor(postalCode: postalCode) { (placemark) in
+            guard let city = placemark?.locality, let postalCode = placemark?.postalCode else {
+                self.addressLabel.text = "No Address"
+                return
+            }
+            self.addressLabel.text = "\(city), \(postalCode)"
+            self.fetchJobsAround(postalCode: postalCode)
+        }
     }
+    
+    @objc func fetchJobsAround(postalCode: String) {
+        guard let url = URL(string: Route.parameters([Parameter.jobType: "ios", Parameter.location: postalCode]).completeUrl) else { return }
+        ApiClient.get(url: url) { [unowned self] response in
+            guard let response = response else { return }
+            self.jobs = response
+            self.tableView.reloadData()
+        }
+    }
+    
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        guard range.length == 1 || range.location < 5 else { return false }
+        return true
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return jobs.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        cell.textLabel?.text = jobs[indexPath.row]["title"] as? String
+        
+        return cell
+    }
+    
+    
+    
 }
