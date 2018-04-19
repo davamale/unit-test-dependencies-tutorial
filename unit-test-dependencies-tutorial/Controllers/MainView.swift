@@ -35,19 +35,23 @@ enum Parameter: String {
 
 class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var searchText: UITextField!
     @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var currentLocationLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchStackView: UIStackView!
     
     private var jobs = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.groupTableViewBackground
-        
+        tableView.backgroundColor = UIColor.white
+        tableView.tableFooterView = UIView()
+        topView.backgroundColor = UIColor(red: 45/255, green: 49/255, blue: 66/255, alpha: 1)
+        addressLabel.textColor = .white
+        searchButton.setTitleColor(UIColor(red: 239/255, green: 131/255, blue: 84/255, alpha: 1), for: .normal)
         searchButton.addTarget(self, action: #selector(updateLocationTapped), for: .touchUpInside)
         
         updateCurrentAddress()
