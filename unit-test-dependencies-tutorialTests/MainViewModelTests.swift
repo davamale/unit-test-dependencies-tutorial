@@ -53,5 +53,4 @@ class MainViewModelTests: XCTestCase {
             expect(responseTitle).to(equal(DummyData.Api.response["title"]))
         }
     }
-    
 }

@@ -32,7 +32,6 @@ struct DummyData {
             return [response]
         }
     }
-
 }
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
+class MainView: UIViewController {
 
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
@@ -17,26 +17,38 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchStackView: UIStackView!
     private var viewModel: MainViewModel!
-    
     private var jobs = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewLoaded()
+
         viewModel = MainViewModel(locationServiceType: LocationService.shared, apiClientType: ApiClient.shared, addressCompletion: { address in
             self.addressLabel.text = address
         })
         
+        updateCurrentAddress()
+    }
+}
+
+// MARK: ViewCustomizable
+extension MainView: ViewCustomizable {
+    func prepareView() {
         tableView.backgroundColor = UIColor.white
         tableView.tableFooterView = UIView()
         topView.backgroundColor = UIColor(red: 45/255, green: 49/255, blue: 66/255, alpha: 1)
         addressLabel.textColor = .white
         searchButton.setTitleColor(UIColor(red: 239/255, green: 131/255, blue: 84/255, alpha: 1), for: .normal)
-        searchButton.addTarget(self, action: #selector(updateLocationTapped), for: .touchUpInside)
-        
-        updateCurrentAddress()
     }
     
+    func addButtonActions() {
+        searchButton.addTarget(self, action: #selector(updateLocationTapped), for: .touchUpInside)
+    }
+}
+
+// MARK: Selectors
+@objc extension MainView {
     @objc func updateCurrentAddress() {
         viewModel.updateCurrentAddress()
     }
@@ -55,15 +67,10 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
             self.tableView.reloadData()
         }
     }
-    
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
-        
-        guard range.length == 1 || range.location < 5 else { return false }
-        return true
-    }
-    
+}
+
+// MARK: UITableViewDataSource
+extension MainView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -80,5 +87,16 @@ class MainView: UIViewController, UITextFieldDelegate, UITableViewDataSource {
         cell.textLabel?.text = jobs[indexPath.row]["title"] as? String
         
         return cell
+    }
+}
+
+// MARK: UITextFieldDelegate
+extension MainView: UITextFieldDelegate {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        guard range.length == 1 || range.location < 5 else { return false }
+        return true
     }
 }
