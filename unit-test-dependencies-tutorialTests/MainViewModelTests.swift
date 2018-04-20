@@ -10,5 +10,23 @@ import XCTest
 import Nimble
 
 class MainViewModelTests: XCTestCase {
+    
+    let stubService: LocationServiceType & ApiClientType = ServiceStub()
 
+    func testUpdateCurrentAddress() {
+        let viewModel = MainViewModel(locationServiceType: stubService, apiClientType: stubService, addressCompletion: { address in
+            expect(address).to(equal(DummyData.fullAddress))
+        })
+        
+        viewModel.updateCurrentAddress()
+    }
+    
+    func testUpdateAddressForPostalCode() {
+        let viewModel = MainViewModel(locationServiceType: stubService, apiClientType: stubService, addressCompletion: { address in
+            expect(address).to(equal(DummyData.fullAddress))
+        })
+        
+        viewModel.updateAddressFor(postalCode: DummyData.postalCode)
+    }
+    
 }

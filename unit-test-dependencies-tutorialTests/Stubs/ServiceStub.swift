@@ -18,6 +18,10 @@ struct DummyData {
     static let postalCode = "94102"
     static let country = "Estados Unidos"
     static let isoCountry = "US"
+    
+    static var fullAddress: String {
+        return "\(city), \(postalCode)"
+    }
 }
 
 class ServiceStub: LocationServiceType, ApiClientType {
@@ -35,12 +39,8 @@ class ServiceStub: LocationServiceType, ApiClientType {
     }
     
     func currentAddress(completion: @escaping (MKPlacemark?) -> ()) {
-        let placemarkd = MKPlacemark(coordinate: CLLocationCoordinate2D(), addressDictionary: addressDictionary)
+        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(), addressDictionary: addressDictionary)
         completion(placemark)
-    }
-    
-    func currentAddress(completion: @escaping (MKPlacemark?) -> ()) {
-        
     }
     
     func addressFor(postalCode: String, completion: @escaping (MKPlacemark?) -> ()) {
@@ -50,6 +50,4 @@ class ServiceStub: LocationServiceType, ApiClientType {
     func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
         
     }
-    
-    
 }

@@ -13,6 +13,8 @@
 		EE918B1B208900F2002A0442 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE918B1A208900F2002A0442 /* ApiClient.swift */; };
 		EE918B1F2089224B002A0442 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE918B1E2089224B002A0442 /* MainViewModel.swift */; };
 		EE918B2520894059002A0442 /* ServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE918B2420894059002A0442 /* ServiceStub.swift */; };
+		EE918B2620896A95002A0442 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE918B1E2089224B002A0442 /* MainViewModel.swift */; };
+		EE918B2720896B3D002A0442 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE918B1A208900F2002A0442 /* ApiClient.swift */; };
 		EED23C4D200965D5008234EF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED23C4C200965D5008234EF /* LocationService.swift */; };
 		EED23C522009673B008234EF /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED23C512009673B008234EF /* MainViewModelTests.swift */; };
 		EEEF77B51FFB265F003A3252 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEF77B41FFB265F003A3252 /* AppDelegate.swift */; };
@@ -426,6 +428,8 @@
 				EE918B2520894059002A0442 /* ServiceStub.swift in Sources */,
 				EE111C2B2086611D0076A77F /* Protocols.swift in Sources */,
 				EED23C522009673B008234EF /* MainViewModelTests.swift in Sources */,
+				EE918B2620896A95002A0442 /* MainViewModel.swift in Sources */,
+				EE918B2720896B3D002A0442 /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
