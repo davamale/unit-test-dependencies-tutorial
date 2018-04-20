@@ -94,7 +94,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EE7DBC982087B23F003C2DE9 /* Stubs */ = {
+		EE918B292089865E002A0442 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -139,7 +139,7 @@
 		EEEF77C81FFB265F003A3252 /* unit-test-dependencies-tutorialTests */ = {
 			isa = PBXGroup;
 			children = (
-				EE7DBC982087B23F003C2DE9 /* Stubs */,
+				EE918B292089865E002A0442 /* Stubs */,
 				EEEF77CB1FFB265F003A3252 /* Info.plist */,
 				EED23C512009673B008234EF /* MainViewModelTests.swift */,
 			);
