@@ -57,9 +57,8 @@ class ServiceStub: LocationServiceType, ApiClientType {
     }
     
     func addressFor(postalCode: String, completion: @escaping (MKPlacemark?) -> ()) {
-        var address = addressDictionary
-        address[CNPostalAddressPostalCodeKey] = postalCode
-        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(), addressDictionary: address)
+        guard postalCode == DummyData.Location.postalCode else { return completion (nil) }
+        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(), addressDictionary: addressDictionary)
         completion(placemark)
     }
     

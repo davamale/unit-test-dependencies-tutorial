@@ -32,6 +32,17 @@ class MainViewModelTests: XCTestCase {
         viewModel.updateAddressFor(postalCode: postalCode)
     }
     
+    func testUpdateAddressForPostalCodeNotFound() {
+        
+        let postalCode = "94105"
+        
+        let viewModel = MainViewModel(locationServiceType: stubService, apiClientType: stubService, addressCompletion: { address in
+            expect(address).to(equal("No Address"))
+        })
+        
+        viewModel.updateAddressFor(postalCode: postalCode)
+    }
+    
     func testFetchJobsAroundPostalCode() {
         let viewModel = MainViewModel(locationServiceType: stubService, apiClientType: stubService, addressCompletion: { address in
             expect(address).to(equal(DummyData.Location.fullAddress))
