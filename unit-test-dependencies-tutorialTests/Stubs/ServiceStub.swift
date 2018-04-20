@@ -11,30 +11,43 @@ import MapKit
 import Contacts
 
 struct DummyData {
-    static let streetAddres = "269–299 Geary St"
-    static let city = "San Francisco"
-    static let subLocality = "Union Square"
-    static let state = "CA"
-    static let postalCode = "94102"
-    static let country = "Estados Unidos"
-    static let isoCountry = "US"
-    
-    static var fullAddress: String {
-        return "\(city), \(postalCode)"
+    struct Location {
+        static let streetAddres = "269–299 Geary St"
+        static let city = "San Francisco"
+        static let subLocality = "Union Square"
+        static let state = "CA"
+        static let postalCode = "94102"
+        static let country = "Estados Unidos"
+        static let isoCountry = "US"
+        
+        static var fullAddress: String {
+            return "\(city), \(postalCode)"
+        }
     }
+    
+    struct Api {
+        static let response = ["title": "iOS Developer Test"]
+        
+        static var responseArray: [[String: Any]] {
+            return [response]
+        }
+    }
+
 }
+
+
 
 class ServiceStub: LocationServiceType, ApiClientType {
     
     var addressDictionary: [String: Any] {
         let addresDict =
-            [CNPostalAddressStreetKey : DummyData.streetAddres,
-             CNPostalAddressCityKey : DummyData.city,
-             CNPostalAddressSubLocalityKey: DummyData.subLocality,
-             CNPostalAddressStateKey : DummyData.state,
-             CNPostalAddressPostalCodeKey : DummyData.postalCode,
-             CNPostalAddressCountryKey : DummyData.country,
-             CNPostalAddressISOCountryCodeKey : DummyData.isoCountry]
+            [CNPostalAddressStreetKey : DummyData.Location.streetAddres,
+             CNPostalAddressCityKey : DummyData.Location.city,
+             CNPostalAddressSubLocalityKey: DummyData.Location.subLocality,
+             CNPostalAddressStateKey : DummyData.Location.state,
+             CNPostalAddressPostalCodeKey : DummyData.Location.postalCode,
+             CNPostalAddressCountryKey : DummyData.Location.country,
+             CNPostalAddressISOCountryCodeKey : DummyData.Location.isoCountry]
         return addresDict
     }
     
@@ -44,7 +57,10 @@ class ServiceStub: LocationServiceType, ApiClientType {
     }
     
     func addressFor(postalCode: String, completion: @escaping (MKPlacemark?) -> ()) {
-        
+        var address = addressDictionary
+        address[CNPostalAddressPostalCodeKey] = postalCode
+        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(), addressDictionary: address)
+        completion(placemark)
     }
     
     func get(url: URL, completion: @escaping ([NSDictionary]?) -> ()) {
